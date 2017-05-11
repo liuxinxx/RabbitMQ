@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+encoding//message_queue/accept.py=utf8
+encoding//message_queue/push.py=utf8
+encoding//message_queue/send.py=utf8
