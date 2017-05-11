@@ -2,20 +2,9 @@
 import pika
 import time
 from selenium import webdriver
-import time
-import re
 from bs4 import BeautifulSoup
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.webdriver.common.proxy import Proxy
-from selenium.webdriver.common.proxy import ProxyType
 import HTMLParser
-import requests
-import random
-import sys
-import os
-import subprocess
-import csv
-import codecs
 def downloader_html(url):##利用PhantomJS获取网页数据
     dcap = dict(DesiredCapabilities.PHANTOMJS)
     #伪造浏览器UA标识，该条UA为百度爬虫
@@ -59,8 +48,8 @@ def callback(ch, method, properties, body):
     soup = BeautifulSoup(downloader_html(body),'lxml')
     listfenlei = fenlei(soup)
     for g in range(len(listfenlei)):
-         print '分类为：',listfenlei[g][0],'链接为：',listfenlei[g][1]
-         time.sleep(1)
+        print '分类为：',listfenlei[g][0],'链接为：',listfenlei[g][1]
+        time.sleep(1)
     print(" [消费者] Done")
     ch.basic_ack(delivery_tag=method.delivery_tag)#  接收到消息后会给rabbitmq发送一个确认
 def accept_list():
@@ -68,10 +57,10 @@ def accept_list():
             接收任务
     callback    :回调函数
     '''
-    username = 'guest'   #指定远程rabbitmq的用户名密码
-    pwd = 'guest'
+    username = '*****'   #指定远程rabbitmq的用户名密码
+    pwd = '*****'
     user_pwd = pika.PlainCredentials(username, pwd)
-    s_conn = pika.BlockingConnection(pika.ConnectionParameters('139.129.46.146',5672,'/', credentials=user_pwd))#创建连接
+    s_conn = pika.BlockingConnection(pika.ConnectionParameters('192.168.1.1',5672,'/', credentials=user_pwd))#创建连接
     channel = s_conn.channel()  #在连接上创建一个频道
     
     channel.queue_declare(queue='task_queue', durable=True) #创建一个新队列task_queue，设置队列持久化，注意不要跟已存在的队列重名，否则有报错  

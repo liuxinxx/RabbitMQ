@@ -17,10 +17,10 @@ def send(message_list):
     '''
     message_list    :消息队列
     '''
-    username = 'guest'   #指定远程rabbitmq的用户名密码
-    pwd = 'guest' #远程密码
+    username = '***'   #指定远程rabbitmq的用户名密码
+    pwd = '***' #远程密码
     user_pwd = pika.PlainCredentials(username, pwd)
-    s_conn = pika.BlockingConnection(pika.ConnectionParameters('139.129.46.146',5672,'/', credentials=user_pwd))#创建连接
+    s_conn = pika.BlockingConnection(pika.ConnectionParameters('192.168.1.1',5672,'/', credentials=user_pwd))#创建连接
     channel = s_conn.channel()  #在连接上创建一个频道
     
     channel.queue_declare(queue='task_queue', durable=True) #创建一个新队列task_queue，设置队列持久化，注意不要跟已存在的队列重名，否则有报错
